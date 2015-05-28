@@ -1,0 +1,26 @@
+{
+    "name": "polidog/esa-php",
+    "description": "esa.io api library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "polidog",
+            "email": "polidogs@gmail.com"
+        }
+    ],
+    "require": {
+      "php": ">=5.4.0",
+      "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "4.6.7",
+      "phpunit/phpcov": "*",
+      "phake/phake": "2.0.*@dev",
+      "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+          "Polidog\\Esa\\": ""
+        }
+    }
+}
