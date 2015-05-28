@@ -1,7 +1,8 @@
 <?php
-namespace Polidog\Esa;
+namespace Polidog\Esa\Tests;
 
 use Phake;
+use Polidog\Esa\Client;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
