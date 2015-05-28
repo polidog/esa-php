@@ -1,5 +1,5 @@
 # for php-coveralls
 src_dir: ./
-coverage_clover: build/logs/clover.xml
-json_path: build/logs/coveralls-upload.json
+coverage_clover: build/clover.xml
+json_path: build/coveralls-upload.json
 repo_token: 3xJFnsjbW1bOVnKn757tIp3Fum8UC7Cvi
