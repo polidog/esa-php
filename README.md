@@ -20,7 +20,7 @@ curl -sS https://getcomposer.org/installer | php
 Next, run the Composer command to install the lasted stable version of esa-php.
 
 ```
-composer.phar install polidog/esa-php
+composer.phar require polidog/esa-php
 ```
 
 ## Usage
