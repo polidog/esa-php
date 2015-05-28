@@ -50,7 +50,6 @@ class ApiMethods
 
     /**
      * @param $number
-     * @param array $params
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function post($number)
