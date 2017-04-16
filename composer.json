@@ -20,7 +20,12 @@
     },
     "autoload": {
         "psr-4": {
-          "Polidog\\Esa\\": ""
+          "Polidog\\Esa\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "Polidog\\Esa\\Tests\\": "tests"
         }
     }
 }
