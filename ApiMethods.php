@@ -21,6 +21,17 @@ class ApiMethods
     }
 
     /**
+     * @param array $params
+     * @param null  $headers
+     */
+    public function user(array $params =[])
+    {
+        return $this->httpClient->request("GET",'user',[
+            'query' => $params
+        ]);
+    }
+
+    /**
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function teams()

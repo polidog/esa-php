@@ -171,4 +171,13 @@ class ApiMethodsTest extends \PHPUnit_Framework_TestCase
 
         Phake::verify($client)->request("DELETE","teams/bar/emojis/team_emoji");
     }
+
+    public function callApiUser()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->user();
+
+        Phake::verify($client)->request("GET", "user");
+    }
 }
