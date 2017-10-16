@@ -186,4 +186,34 @@ class ApiMethodsTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
     }
+
+    public function testCallCommentList()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->comments(null, [
+            'page' => 3
+        ]);
+
+        Phake::verify($client)->request("GET", "teams/bar/comments", [
+            'query' => [
+                'page' => 3
+            ]
+        ]);
+    }
+
+    public function testCallPostCommentList()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->comments(1, [
+            'page' => 3
+        ]);
+
+        Phake::verify($client)->request("GET", "teams/bar/posts/1/comments", [
+            'query' => [
+                'page' => 3
+            ]
+        ]);
+    }
 }

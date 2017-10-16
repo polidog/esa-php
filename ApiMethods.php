@@ -49,6 +49,14 @@ class ApiMethods
     }
 
     /**
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function stats()
+    {
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/stats");
+    }
+
+    /**
      * @param array $params
      * @return \Psr\Http\Message\ResponseInterface
      */
@@ -102,6 +110,24 @@ class ApiMethods
     public function deletePost($number)
     {
         return $this->httpClient->request('DELETE',"teams/{$this->currentTeam}/posts/{$number}");
+    }
+
+    /**
+     * @param integer $number
+     * @param array $params
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function comments($number = null, $params = [])
+    {
+        if (empty($number)) {
+            return $this->httpClient->request('GET', "teams/{$this->currentTeam}/comments",[
+                'query' => $params
+            ]);
+        }
+
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/posts/{$number}/comments",[
+            'query' => $params
+        ]);
     }
 
     /**
