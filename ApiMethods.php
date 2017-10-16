@@ -92,4 +92,37 @@ class ApiMethods
     {
         return $this->httpClient->request('DELETE',"teams/{$this->currentTeam}/posts/{$number}");
     }
+
+    /**
+     * @param array $params
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function emojis(array $params = [])
+    {
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/emojis",[
+            'query' => $params
+        ]);
+    }
+
+    /**
+     * @param $data
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createEmoji($data)
+    {
+        return $this->httpClient->request('POST',"teams/{$this->currentTeam}/emojis",[
+            'json' => [
+                'emoji' => $data
+            ]
+        ]);
+    }
+
+    /**
+     * @param $code
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function deleteEmoji($code)
+    {
+        return $this->httpClient->request('DELETE',"teams/{$this->currentTeam}/emojis/{$code}");
+    }
 }
