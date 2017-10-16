@@ -119,4 +119,56 @@ class ApiMethodsTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * @test
+     */
+    public function callApiEmoji()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->emojis(["include" => "all"]);
+
+        Phake::verify($client)->request("GET","teams/bar/emojis",[
+            "query" => [
+                "include" => "all"
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callApiCreateEmoji()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->createEmoji([
+            "code" => "team_emoji",
+            "image" => "base64_string"
+        ]);
+
+        Phake::verify($client)->request("POST","teams/bar/emojis",[
+            "json" => [
+                "emoji" => [
+                    "code" => "team_emoji",
+                    "image" => "base64_string"
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function callApiDeleteEmoji()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->deleteEmoji("team_emoji");
+
+        Phake::verify($client)->request("DELETE","teams/bar/emojis/team_emoji");
+    }
 }
