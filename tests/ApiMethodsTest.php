@@ -176,8 +176,14 @@ class ApiMethodsTest extends \PHPUnit_Framework_TestCase
     {
         $client = Phake::mock("GuzzleHttp\\Client");
         $apiMethods = new ApiMethods($client, 'bar');
-        $apiMethods->user();
+        $apiMethods->user([
+            'include' => 'teams'
+        ]);
 
-        Phake::verify($client)->request("GET", "user");
+        Phake::verify($client)->request("GET", "user", [
+            'query' => [
+                'include' => 'teams'
+            ]
+        ]);
     }
 }
