@@ -16,7 +16,8 @@
       "phpunit/phpunit": "4.6.7",
       "phpunit/phpcov": "*",
       "phake/phake": "2.0.*@dev",
-      "satooshi/php-coveralls": "dev-master"
+      "satooshi/php-coveralls": "dev-master",
+        "friendsofphp/php-cs-fixer": "2.2"
     },
     "autoload": {
         "psr-4": {

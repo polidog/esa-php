@@ -1,4 +1,5 @@
 <?php
+
 namespace Polidog\Esa;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -26,15 +27,15 @@ final class Client
         'allow_redirect' => false,
         'headers' => [
             'User-Agent' => 'esa-php-api v1',
-            'Accept'     => 'application/json',
-        ]
+            'Accept' => 'application/json',
+        ],
     ];
 
     /**
      * @param $accessToken
      * @param $currentTeam
      * @param HttpClientInterface $httpClient
-     * @param array $httpOptions
+     * @param array               $httpOptions
      */
     public function __construct($accessToken, $currentTeam, HttpClientInterface $httpClient = null, $httpOptions = [])
     {
@@ -48,13 +49,12 @@ final class Client
         }
         $this->httpClient = $httpClient;
         $this->apiMethods = new ApiMethods($httpClient, $currentTeam);
-
     }
 
     public function __call($name, $args)
     {
         /** @var Response $response */
-        $response = call_user_func_array([$this->apiMethods,$name],$args);
+        $response = call_user_func_array([$this->apiMethods, $name], $args);
         if ($response->getStatusCode() == 200) {
             return json_decode($response->getBody()->getContents(), true);
         }
@@ -63,10 +63,10 @@ final class Client
     private function createAuthStack()
     {
         $stack = HandlerStack::create();
-        $stack->push(Middleware::mapRequest(function(RequestInterface $request){
-            return $request->withHeader('Authorization', "Bearer ".$this->accessToken);
+        $stack->push(Middleware::mapRequest(function (RequestInterface $request) {
+            return $request->withHeader('Authorization', 'Bearer '.$this->accessToken);
         }));
+
         return $stack;
     }
-
 }

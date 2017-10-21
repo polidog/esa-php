@@ -1,9 +1,11 @@
 <?php
+
 namespace Polidog\Esa;
+
 use GuzzleHttp\ClientInterface;
 
 /**
- * Class ApiMethods
+ * Class ApiMethods.
  */
 class ApiMethods
 {
@@ -24,10 +26,10 @@ class ApiMethods
      * @param array $params
      * @param null  $headers
      */
-    public function user(array $params =[])
+    public function user(array $params = [])
     {
-        return $this->httpClient->request("GET",'user',[
-            'query' => $params
+        return $this->httpClient->request('GET', 'user', [
+            'query' => $params,
         ]);
     }
 
@@ -36,16 +38,17 @@ class ApiMethods
      */
     public function teams()
     {
-        return $this->httpClient->request('GET','teams');
+        return $this->httpClient->request('GET', 'teams');
     }
 
     /**
      * @param null $name
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function team($name = null)
     {
-        return $this->httpClient->request('GET',"teams/{$name}");
+        return $this->httpClient->request('GET', "teams/{$name}");
     }
 
     /**
@@ -66,120 +69,130 @@ class ApiMethods
 
     /**
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function posts(array $params = [])
     {
-        return $this->httpClient->request('GET',"teams/{$this->currentTeam}/posts",[
-            'query' => $params
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/posts", [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param $number
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function post($number)
     {
-        return $this->httpClient->request('GET',"teams/{$this->currentTeam}/posts/{$number}");
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/posts/{$number}");
     }
 
     /**
      * @param $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function createPost($data)
     {
-        return $this->httpClient->request('POST',"teams/{$this->currentTeam}/posts",[
+        return $this->httpClient->request('POST', "teams/{$this->currentTeam}/posts", [
             'json' => [
-                'post' => $data
-            ]
+                'post' => $data,
+            ],
         ]);
     }
 
     /**
      * @param $number
      * @param $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function updatePost($number, $data)
     {
-        return $this->httpClient->request('PATCH',"teams/{$this->currentTeam}/posts/{$number}",[
+        return $this->httpClient->request('PATCH', "teams/{$this->currentTeam}/posts/{$number}", [
             'json' => [
-                'post' => $data
-            ]
+                'post' => $data,
+            ],
         ]);
     }
 
     /**
      * @param $number
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deletePost($number)
     {
-        return $this->httpClient->request('DELETE',"teams/{$this->currentTeam}/posts/{$number}");
+        return $this->httpClient->request('DELETE', "teams/{$this->currentTeam}/posts/{$number}");
     }
 
     /**
-     * @param integer $number
+     * @param int   $number
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function comments($number = null, $params = [])
     {
         if (empty($number)) {
-            return $this->httpClient->request('GET', "teams/{$this->currentTeam}/comments",[
-                'query' => $params
+            return $this->httpClient->request('GET', "teams/{$this->currentTeam}/comments", [
+                'query' => $params,
             ]);
         }
 
-        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/posts/{$number}/comments",[
-            'query' => $params
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/posts/{$number}/comments", [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param       $commentId
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function comment($commentId, $params = [])
     {
-        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/comments/{$commentId}",[
-            'query' => $params
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/comments/{$commentId}", [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param $postNumber
      * @param $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function createComment($postNumber, $data)
     {
-        return $this->httpClient->request('POST', "teams/{$this->currentTeam}/posts/{$postNumber}/comments",[
+        return $this->httpClient->request('POST', "teams/{$this->currentTeam}/posts/{$postNumber}/comments", [
             'json' => [
-                'comment' => $data
-            ]
+                'comment' => $data,
+            ],
         ]);
     }
 
     /**
      * @param $commentId
      * @param $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function updateComment($commentId, $data)
     {
-        return $this->httpClient->request('PATCH', "teams/{$this->currentTeam}/comments/{$commentId}",[
+        return $this->httpClient->request('PATCH', "teams/{$this->currentTeam}/comments/{$commentId}", [
             'json' => [
-                'comment' => $data
-            ]
+                'comment' => $data,
+            ],
         ]);
     }
 
     /**
      * @param $commentId
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deleteComment($commentId)
@@ -190,29 +203,32 @@ class ApiMethods
     /**
      * @param       $postNumber
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function postStargazers($postNumber, $params = [])
     {
-        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/stargazers"),[
-            'query' => $params
+        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/stargazers"), [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param       $postNumber
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function addPostStar($postNumber, $params = [])
     {
-        return $this->httpClient->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/star"),[
-            'json' => $params
+        return $this->httpClient->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/star"), [
+            'json' => $params,
         ]);
     }
 
     /**
      * @param $postNumber
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deletePostStar($postNumber)
@@ -223,29 +239,32 @@ class ApiMethods
     /**
      * @param       $commentId
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function commentStargazers($commentId, $params = [])
     {
-        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("comments/{$commentId}/star"),[
-            'query' => $params
+        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("comments/{$commentId}/star"), [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param       $commentId
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function addCommentStar($commentId, $params = [])
     {
-        return $this->httpClient->request('POST', $this->getCurrentTeamUrl("comments/{$commentId}/star"),[
-            'json' => $params
+        return $this->httpClient->request('POST', $this->getCurrentTeamUrl("comments/{$commentId}/star"), [
+            'json' => $params,
         ]);
     }
 
     /**
      * @param $commentId
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deleteCommentStar($commentId)
@@ -256,17 +275,19 @@ class ApiMethods
     /**
      * @param       $postNumber
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function watchers($postNumber, $params = [])
     {
-        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/watchers"),[
-            'query' => $params
+        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/watchers"), [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param $postNumber
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function addWatch($postNumber)
@@ -276,6 +297,7 @@ class ApiMethods
 
     /**
      * @param $postNumber
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deleteWatch($postNumber)
@@ -288,17 +310,18 @@ class ApiMethods
      */
     public function categories()
     {
-        return $this->httpClient->request('GET', $this->getCurrentTeamUrl("categories"));
+        return $this->httpClient->request('GET', $this->getCurrentTeamUrl('categories'));
     }
 
     /**
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function batchMoveCategory($params = [])
     {
-        return $this->httpClient->request('POST', $this->getCurrentTeamUrl('categories/batch_move'),[
-            'json' => $params
+        return $this->httpClient->request('POST', $this->getCurrentTeamUrl('categories/batch_move'), [
+            'json' => $params,
         ]);
     }
 
@@ -328,30 +351,33 @@ class ApiMethods
 
     /**
      * @param $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function pendingInvitations(array $params)
     {
-        return $this->httpClient->request('GET', $this->getCurrentTeamUrl('invitations'),[
-            'query' => $params
+        return $this->httpClient->request('GET', $this->getCurrentTeamUrl('invitations'), [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param array $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function sendInvitation(array $data)
     {
-        return $this->httpClient->request('POST', $this->getCurrentTeamUrl('invitations'),[
+        return $this->httpClient->request('POST', $this->getCurrentTeamUrl('invitations'), [
             'json' => [
-                'members' => $data
-            ]
+                'members' => $data,
+            ],
         ]);
     }
 
     /**
      * @param string $code
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function cancelInvitation($code)
@@ -361,38 +387,41 @@ class ApiMethods
 
     /**
      * @param array $params
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function emojis(array $params = [])
     {
-        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/emojis",[
-            'query' => $params
+        return $this->httpClient->request('GET', "teams/{$this->currentTeam}/emojis", [
+            'query' => $params,
         ]);
     }
 
     /**
      * @param $data
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function createEmoji($data)
     {
-        return $this->httpClient->request('POST',"teams/{$this->currentTeam}/emojis",[
+        return $this->httpClient->request('POST', "teams/{$this->currentTeam}/emojis", [
             'json' => [
-                'emoji' => $data
-            ]
+                'emoji' => $data,
+            ],
         ]);
     }
 
     /**
      * @param $code
+     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function deleteEmoji($code)
     {
-        return $this->httpClient->request('DELETE',"teams/{$this->currentTeam}/emojis/{$code}");
+        return $this->httpClient->request('DELETE', "teams/{$this->currentTeam}/emojis/{$code}");
     }
 
-    private function getCurrentTeamUrl($path = "")
+    private function getCurrentTeamUrl($path = '')
     {
         return "teams/{$this->currentTeam}/$path";
     }
