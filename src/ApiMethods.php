@@ -201,6 +201,24 @@ class ApiMethods
     }
 
     /**
+     * @param $postNumber
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function createSharing($postNumber)
+    {
+        return $this->httpClient->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/sharing"));
+    }
+
+    /**
+     * @param $postNumber
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function deleteSharing($postNumber)
+    {
+        return $this->httpClient->request('DELETE', $this->getCurrentTeamUrl("posts/{$postNumber}/sharing"));
+    }
+
+    /**
      * @param       $postNumber
      * @param array $params
      *
