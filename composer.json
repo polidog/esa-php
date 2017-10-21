@@ -22,5 +22,8 @@
         "psr-4": {
           "Polidog\\Esa\\": ""
         }
-    }
+    },
+  "scripts": {
+    "test": "./vendor/bin/phpunit"
+  }
 }

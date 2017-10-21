@@ -202,18 +202,283 @@ class ApiMethodsTest extends \PHPUnit_Framework_TestCase
         ]);
     }
 
-    public function testCallPostCommentList()
+    public function testCallComment()
     {
         $client = Phake::mock("GuzzleHttp\\Client");
         $apiMethods = new ApiMethods($client, 'bar');
-        $apiMethods->comments(1, [
-            'page' => 3
+
+        $apiMethods->comment(1,[
+            'include' => 'stargazers'
         ]);
 
-        Phake::verify($client)->request("GET", "teams/bar/posts/1/comments", [
+        Phake::verify($client)->request("GET", "teams/bar/comments/1", [
             'query' => [
-                'page' => 3
+                'include' => 'stargazers'
             ]
         ]);
+    }
+
+    public function testCreateComment()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $bodyMd = 'LGTM!!';
+
+        $apiMethods->createComment(2,[
+            'body_md' => $bodyMd
+        ]);
+
+        Phake::verify($client)->request("POST", "teams/bar/posts/2/comments", [
+            'json' => [
+                'comment' => [
+                    'body_md' => $bodyMd
+                ]
+            ]
+        ]);
+
+    }
+
+    public function testUpdateComment()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $bodyMd = 'LGTM!!';
+
+        $apiMethods->updateComment(22767,[
+            'body_md' => $bodyMd
+        ]);
+
+        Phake::verify($client)->request("PATCH", "teams/bar/comments/22767", [
+            'json' => [
+                'comment' => [
+                    'body_md' => $bodyMd
+                ]
+            ]
+        ]);
+    }
+
+    public function testDeleteComment()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->deleteComment(22767);
+
+        Phake::verify($client)->request("DELETE", "teams/bar/comments/22767");
+    }
+
+    public function testMembers()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->members();
+
+        Phake::verify($client)->request('GET', "teams/bar/members");
+    }
+
+    public function testPostStargazers()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->postStargazers(2312, [
+            'page' => 2,
+            'per_page' => 30,
+        ]);
+
+        Phake::verify($client)->request('GET', "teams/bar/posts/2312/stargazers",[
+            'query' => [
+                'page' => 2,
+                'per_page' => 30,
+            ]
+        ]);
+
+    }
+
+    public function testAddPostStar()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->addPostStar(123,[
+            'body' => 'foo bar'
+        ]);
+
+        Phake::verify($client)->request('POST', 'teams/bar/posts/123/star',[
+            'json' => [
+                'body' => 'foo bar'
+            ]
+        ]);
+    }
+
+    public function testDeletePostStar()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->deletePostStar(123);
+
+        Phake::verify($client)->request('DELETE', 'teams/bar/posts/123/star');
+    }
+
+    public function testCommentStargazers()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->commentStargazers(123,[
+            'page' => 2,
+            'par_page' => 20,
+        ]);
+
+        Phake::verify($client)->request('GET', 'teams/bar/comments/123/star',[
+            'query' => [
+                'page' => 2,
+                'par_page' => 20
+            ]
+        ]);
+    }
+
+    public function testAddCommentStar()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->addCommentStar(123,[
+            'body' => 'foo bar'
+        ]);
+
+        Phake::verify($client)->request('POST', 'teams/bar/comments/123/star',[
+            'json' => [
+                'body' => 'foo bar'
+            ]
+        ]);
+    }
+
+    public function testDeleteCommentStar()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->deleteCommentStar(123);
+
+        Phake::verify($client)->request('DELETE', 'teams/bar/comments/123/star');
+    }
+
+    public function testWatchers()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->watchers(2312, [
+            'page' => 2,
+            'par_page' => 30
+        ]);
+
+        Phake::verify($client)->request('GET', 'teams/bar/posts/2312/watchers',[
+            'query' => [
+                'page' => 2,
+                'par_page' => 30
+            ]
+        ]);
+    }
+
+    public function testAddWatch()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->addWatch(2312);
+
+        Phake::verify($client)->request('GET', 'teams/bar/posts/2312/watch');
+    }
+
+    public function testDeleteWatch()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->deleteWatch(2312);
+
+        Phake::verify($client)->request('DELETE', 'teams/bar/posts/2312/watch');
+
+    }
+
+    public function testCategories()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->categories(['page' => 1]);
+        Phake::verify($client)->request('GET', 'teams/bar/categories');
+    }
+
+    public function testBatchMoveCategory()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->batchMoveCategory([
+            'from' => '/foo/bar/',
+            'to' => '/baz/'
+        ]);
+
+        Phake::verify($client)->request('POST', 'teams/bar/categories/batch_move',[
+            'json' => [
+                'from' => '/foo/bar/',
+                'to' => '/baz/'
+            ]
+        ]);
+    }
+
+    public function testTags()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->tags();
+
+        Phake::verify($client)->request('GET', 'teams/bar/tags');
+    }
+
+    public function testPendingInvitations()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+        $apiMethods->pendingInvitations([
+            'page' => 2,
+            'par_page' => 35
+        ]);
+
+        Phake::verify($client)->request('GET', 'teams/bar/invitations',[
+            'query' => [
+                'page' => 2,
+                'par_page' => 35,
+            ]
+        ]);
+
+    }
+
+    public function testSendInvitation()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->sendInvitation([
+            'test@test.com',
+            'test2@test.com'
+        ]);
+        Phake::verify($client)->request('POST', 'teams/bar/invitations',[
+            'json' => [
+                'members' => [
+                    'test@test.com',
+                    'test2@test.com'
+                ]
+            ]
+        ]);
+
+    }
+
+    public function testCancelInvitation()
+    {
+        $client = Phake::mock("GuzzleHttp\\Client");
+        $apiMethods = new ApiMethods($client, 'bar');
+
+        $apiMethods->cancelInvitation('mee93383edf699b525e01842d34078e28');
+
+        Phake::verify($client)->request('DELETE', 'teams/bar/invitations/mee93383edf699b525e01842d34078e28');
     }
 }
