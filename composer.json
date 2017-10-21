@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-4": {
-          "Polidog\\Esa\\": ""
+          "Polidog\\Esa\\": "src"
         }
     },
   "scripts": {
