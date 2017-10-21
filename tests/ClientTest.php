@@ -19,16 +19,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         Phake::when($httpClient)->request('GET', 'teams')
             ->thenReturn($response);
 
-        Phake::when($response)->getStatusCode()
-            ->thenReturn(200);
-
         Phake::when($response)->getBody()
             ->thenReturn($stream);
 
         $client = new Client('token', 'polidog', $httpClient);
         $client->teams();
 
-        Phake::verify($response)->getStatusCode();
         Phake::verify($response)->getBody();
         Phake::verify($stream)->getContents();
     }

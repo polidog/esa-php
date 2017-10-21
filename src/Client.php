@@ -3,9 +3,11 @@
 namespace Polidog\Esa;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
+use Polidog\Esa\Exception\ApiErrorException;
 use Psr\Http\Message\RequestInterface;
 
 final class Client
@@ -51,12 +53,22 @@ final class Client
         $this->apiMethods = new ApiMethods($httpClient, $currentTeam);
     }
 
+    /**
+     * @param $name
+     * @param $args
+     * @return mixed
+     *
+     * @throws ApiErrorException
+     */
     public function __call($name, $args)
     {
-        /** @var Response $response */
-        $response = call_user_func_array([$this->apiMethods, $name], $args);
-        if ($response->getStatusCode() == 200) {
-            return json_decode($response->getBody()->getContents(), true);
+        try {
+            /** @var Response $response */
+            $response = call_user_func_array([$this->apiMethods, $name], $args);
+            $data = json_decode($response->getBody()->getContents(), true);
+            return $data;
+        } catch (\Exception $exception) {
+            throw ApiErrorException::newException($exception, $name, $args);
         }
     }
 
