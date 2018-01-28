@@ -13,16 +13,20 @@
       "guzzlehttp/guzzle": "~6.0"
     },
     "require-dev": {
-      "phpunit/phpunit": "4.6.7",
-      "phpunit/phpcov": "*",
-      "phake/phake": "2.*",
-      "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "^2.0",
+        "phpunit/phpunit": "^5.7",
+        "fabpot/php-cs-fixer": "^2.10"
     },
     "autoload": {
         "psr-4": {
           "Polidog\\Esa\\": "src"
         }
     },
+  "autoload-dev": {
+    "psr-4": {
+      "Polidog\\Esa\\Test\\": "tests"
+    }
+  },
   "scripts": {
     "test": "./vendor/bin/phpunit"
   }
