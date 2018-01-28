@@ -39,7 +39,7 @@ class ClientTest extends TestCase
     }
 
     /**
-     * @expectedException  \Polidog\Esa\Exception\ApiErrorException
+     * @expectedException  \Polidog\Esa\Exception\ClientException
      */
     public function testRequestException()
     {

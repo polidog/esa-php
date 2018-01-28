@@ -6,7 +6,7 @@ use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use Polidog\Esa\Exception\ApiErrorException;
+use Polidog\Esa\Exception\ClientException;
 use Psr\Http\Message\RequestInterface;
 
 final class Client implements ClientInterface
@@ -51,7 +51,8 @@ final class Client implements ClientInterface
      *
      * @return array
      *
-     * @throws ApiErrorException
+     * @throws ClientException
+     * @throws \RuntimeException
      */
     public function request($method, $path, array $data = [])
     {
@@ -60,7 +61,7 @@ final class Client implements ClientInterface
 
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
-            throw ApiErrorException::newException($e, $path, $data);
+            throw ClientException::newException($e, $method, $path, $data);
         }
     }
 
