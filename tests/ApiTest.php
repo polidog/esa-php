@@ -339,7 +339,7 @@ class ApiTest extends TestCase
         ])->shouldHaveBeenCalled();
     }
 
-    public function deleteEmoji()
+    public function testDeleteEmoji()
     {
         $api = $this->getApiObject();
         $api->deleteEmoji('code');
