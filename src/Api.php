@@ -32,7 +32,8 @@ class Api
 
     /**
      * @param array $params
-     * @param null  $headers
+     *
+     * @return array
      */
     public function user(array $params = [])
     {
@@ -50,7 +51,7 @@ class Api
     }
 
     /**
-     * @param null $name
+     * @param string|null $name
      *
      * @return array
      */
@@ -64,7 +65,7 @@ class Api
      */
     public function stats()
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/stats");
+        return $this->client->request('GET', $this->getCurrentTeamUrl('stats'));
     }
 
     /**
@@ -72,7 +73,7 @@ class Api
      */
     public function members()
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/members");
+        return $this->client->request('GET', $this->getCurrentTeamUrl('members'));
     }
 
     /**
@@ -82,29 +83,29 @@ class Api
      */
     public function posts(array $params = [])
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/posts", [
+        return $this->client->request('GET', $this->getCurrentTeamUrl('posts'), [
             'query' => $params,
         ]);
     }
 
     /**
-     * @param $number
+     * @param int $number
      *
      * @return array
      */
     public function post($number)
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/posts/{$number}");
+        return $this->client->request('GET', $this->getCurrentTeamUrl("posts/{$number}"));
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
     public function createPost($data)
     {
-        return $this->client->request('POST', "teams/{$this->currentTeam}/posts", [
+        return $this->client->request('POST', $this->getCurrentTeamUrl('posts'), [
             'json' => [
                 'post' => $data,
             ],
@@ -112,14 +113,14 @@ class Api
     }
 
     /**
-     * @param $number
-     * @param $data
+     * @param int   $number
+     * @param array $data
      *
      * @return array
      */
-    public function updatePost($number, $data)
+    public function updatePost($number, array $data)
     {
-        return $this->client->request('PATCH', "teams/{$this->currentTeam}/posts/{$number}", [
+        return $this->client->request('PATCH', $this->getCurrentTeamUrl("posts/{$number}"), [
             'json' => [
                 'post' => $data,
             ],
@@ -127,13 +128,13 @@ class Api
     }
 
     /**
-     * @param $number
+     * @param int $number
      *
      * @return array
      */
     public function deletePost($number)
     {
-        return $this->client->request('DELETE', "teams/{$this->currentTeam}/posts/{$number}");
+        return $this->client->request('DELETE', $this->getCurrentTeamUrl("posts/{$number}"));
     }
 
     /**
@@ -142,41 +143,41 @@ class Api
      *
      * @return array
      */
-    public function comments($number = null, $params = [])
+    public function comments($number = null, array $params = [])
     {
         if (empty($number)) {
-            return $this->client->request('GET', "teams/{$this->currentTeam}/comments", [
+            return $this->client->request('GET', $this->getCurrentTeamUrl('comments'), [
                 'query' => $params,
             ]);
         }
 
-        return $this->client->request('GET', "teams/{$this->currentTeam}/posts/{$number}/comments", [
+        return $this->client->request('GET', $this->getCurrentTeamUrl("posts/{$number}/comments"), [
             'query' => $params,
         ]);
     }
 
     /**
-     * @param       $commentId
+     * @param int   $commentId
      * @param array $params
      *
      * @return array
      */
-    public function comment($commentId, $params = [])
+    public function comment($commentId, array $params = [])
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/comments/{$commentId}", [
+        return $this->client->request('GET', $this->getCurrentTeamUrl("comments/{$commentId}"), [
             'query' => $params,
         ]);
     }
 
     /**
-     * @param $postNumber
-     * @param $data
+     * @param int   $postNumber
+     * @param array $data
      *
      * @return array
      */
-    public function createComment($postNumber, $data)
+    public function createComment($postNumber, array $data)
     {
-        return $this->client->request('POST', "teams/{$this->currentTeam}/posts/{$postNumber}/comments", [
+        return $this->client->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/comments"), [
             'json' => [
                 'comment' => $data,
             ],
@@ -184,14 +185,14 @@ class Api
     }
 
     /**
-     * @param $commentId
-     * @param $data
+     * @param int   $commentId
+     * @param array $data
      *
      * @return array
      */
-    public function updateComment($commentId, $data)
+    public function updateComment($commentId, array $data)
     {
-        return $this->client->request('PATCH', "teams/{$this->currentTeam}/comments/{$commentId}", [
+        return $this->client->request('PATCH', $this->getCurrentTeamUrl("comments/{$commentId}"), [
             'json' => [
                 'comment' => $data,
             ],
@@ -199,17 +200,17 @@ class Api
     }
 
     /**
-     * @param $commentId
+     * @param int $commentId
      *
      * @return array
      */
     public function deleteComment($commentId)
     {
-        return $this->client->request('DELETE', "teams/{$this->currentTeam}/comments/{$commentId}");
+        return $this->client->request('DELETE', $this->getCurrentTeamUrl("comments/{$commentId}"));
     }
 
     /**
-     * @param $postNumber
+     * @param int $postNumber
      *
      * @return array
      */
@@ -219,7 +220,7 @@ class Api
     }
 
     /**
-     * @param $postNumber
+     * @param int $postNumber
      *
      * @return array
      */
@@ -229,12 +230,12 @@ class Api
     }
 
     /**
-     * @param       $postNumber
+     * @param int   $postNumber
      * @param array $params
      *
      * @return array
      */
-    public function postStargazers($postNumber, $params = [])
+    public function postStargazers($postNumber, array $params = [])
     {
         return $this->client->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/stargazers"), [
             'query' => $params,
@@ -242,12 +243,12 @@ class Api
     }
 
     /**
-     * @param       $postNumber
+     * @param int   $postNumber
      * @param array $params
      *
      * @return array
      */
-    public function addPostStar($postNumber, $params = [])
+    public function addPostStar($postNumber, array $params = [])
     {
         return $this->client->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/star"), [
             'json' => $params,
@@ -255,7 +256,7 @@ class Api
     }
 
     /**
-     * @param $postNumber
+     * @param int $postNumber
      *
      * @return array
      */
@@ -265,14 +266,14 @@ class Api
     }
 
     /**
-     * @param       $commentId
+     * @param int   $commentId
      * @param array $params
      *
      * @return array
      */
-    public function commentStargazers($commentId, $params = [])
+    public function commentStargazers($commentId, array $params = [])
     {
-        return $this->client->request('GET', $this->getCurrentTeamUrl("comments/{$commentId}/star"), [
+        return $this->client->request('GET', $this->getCurrentTeamUrl("comments/{$commentId}/stargazers"), [
             'query' => $params,
         ]);
     }
@@ -283,7 +284,7 @@ class Api
      *
      * @return array
      */
-    public function addCommentStar($commentId, $params = [])
+    public function addCommentStar($commentId, array $params = [])
     {
         return $this->client->request('POST', $this->getCurrentTeamUrl("comments/{$commentId}/star"), [
             'json' => $params,
@@ -301,12 +302,12 @@ class Api
     }
 
     /**
-     * @param       $postNumber
+     * @param integer$postNumber
      * @param array $params
      *
      * @return array
      */
-    public function watchers($postNumber, $params = [])
+    public function watchers($postNumber, array $params = [])
     {
         return $this->client->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/watchers"), [
             'query' => $params,
@@ -320,7 +321,7 @@ class Api
      */
     public function addWatch($postNumber)
     {
-        return $this->client->request('GET', $this->getCurrentTeamUrl("posts/{$postNumber}/watch"));
+        return $this->client->request('POST', $this->getCurrentTeamUrl("posts/{$postNumber}/watch"));
     }
 
     /**
@@ -346,7 +347,7 @@ class Api
      *
      * @return array
      */
-    public function batchMoveCategory($params = [])
+    public function batchMoveCategory(array $params = [])
     {
         return $this->client->request('POST', $this->getCurrentTeamUrl('categories/batch_move'), [
             'json' => $params,
@@ -382,7 +383,7 @@ class Api
      *
      * @return array
      */
-    public function pendingInvitations(array $params)
+    public function pendingInvitations(array $params = [])
     {
         return $this->client->request('GET', $this->getCurrentTeamUrl('invitations'), [
             'query' => $params,
@@ -390,15 +391,15 @@ class Api
     }
 
     /**
-     * @param array $data
+     * @param array $emails
      *
      * @return array
      */
-    public function sendInvitation(array $data)
+    public function sendInvitation(array $emails)
     {
         return $this->client->request('POST', $this->getCurrentTeamUrl('invitations'), [
             'json' => [
-                'members' => $data,
+                'members' => ['emails' => $emails],
             ],
         ]);
     }
@@ -420,7 +421,7 @@ class Api
      */
     public function emojis(array $params = [])
     {
-        return $this->client->request('GET', "teams/{$this->currentTeam}/emojis", [
+        return $this->client->request('GET', $this->getCurrentTeamUrl('emojis'), [
             'query' => $params,
         ]);
     }
@@ -430,9 +431,9 @@ class Api
      *
      * @return array
      */
-    public function createEmoji($data)
+    public function createEmoji(array $data)
     {
-        return $this->client->request('POST', "teams/{$this->currentTeam}/emojis", [
+        return $this->client->request('POST', $this->getCurrentTeamUrl('emojis'), [
             'json' => [
                 'emoji' => $data,
             ],
@@ -457,7 +458,7 @@ class Api
      */
     public static function factory($accessToken, $currentTeam)
     {
-        $client = Client::factory($accessToken, $currentTeam);
+        $client = Client::factory($accessToken);
 
         return new self($client, $currentTeam);
     }
