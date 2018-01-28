@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Polidog\Esa\Client;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -9,7 +8,6 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Polidog\Esa\Exception\ApiErrorException;
 use Psr\Http\Message\RequestInterface;
-
 
 final class Client implements ClientInterface
 {
@@ -46,19 +44,20 @@ final class Client implements ClientInterface
         $this->httpClient = $httpClient;
     }
 
-
     /**
      * @param string $method
      * @param string $path
      * @param array  $data
      *
      * @return array
+     *
      * @throws ApiErrorException
      */
     public function request($method, $path, array $data = [])
     {
         try {
-            $response =  $this->httpClient->request($method, $path, $data);
+            $response = $this->httpClient->request($method, $path, $data);
+
             return json_decode($response->getBody()->getContents(), true);
         } catch (GuzzleException $e) {
             throw ApiErrorException::newException($e, $path, $data);
@@ -69,6 +68,7 @@ final class Client implements ClientInterface
     {
         $httpOptions = array_merge(static::$httpOptions, $httpOptions);
         $httpOptions['handler'] = static::createAuthStack($accessToken);
+
         return new self($accessToken, new \GuzzleHttp\Client($httpOptions));
     }
 
@@ -81,5 +81,4 @@ final class Client implements ClientInterface
 
         return $stack;
     }
-
 }

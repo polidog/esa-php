@@ -1,7 +1,6 @@
 <?php
-namespace Polidog\Esa\Exception;
 
-use GuzzleHttp\Exception\ClientException;
+namespace Polidog\Esa\Exception;
 
 class ApiErrorException extends \RuntimeException
 {
@@ -35,14 +34,15 @@ class ApiErrorException extends \RuntimeException
      * @param \Exception $e
      * @param            $name
      * @param array      $args
+     *
      * @return ApiErrorException
      */
     public static function newException(\Exception $e, $name, array $args)
     {
-        $self = new self(sprintf("Api method error: %s", $name), $e->getCode(), $e);
+        $self = new self(sprintf('Api method error: %s', $name), $e->getCode(), $e);
         $self->apiMethodName = $name;
         $self->args = $args;
+
         return $self;
     }
-
 }

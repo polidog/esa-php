@@ -5,7 +5,6 @@ namespace Polidog\Esa;
 use Polidog\Esa\Client\Client;
 use Polidog\Esa\Client\ClientInterface;
 
-
 /**
  * Class ApiMethods.
  */
@@ -23,7 +22,7 @@ class Api
 
     /**
      * @param ClientInterface $client
-     * @param string $currentTeam
+     * @param string          $currentTeam
      */
     public function __construct(ClientInterface $client, $currentTeam)
     {
@@ -211,6 +210,7 @@ class Api
 
     /**
      * @param $postNumber
+     *
      * @return array
      */
     public function createSharing($postNumber)
@@ -220,6 +220,7 @@ class Api
 
     /**
      * @param $postNumber
+     *
      * @return array
      */
     public function deleteSharing($postNumber)
@@ -448,9 +449,16 @@ class Api
         return $this->client->request('DELETE', "teams/{$this->currentTeam}/emojis/{$code}");
     }
 
+    /**
+     * @param $accessToken
+     * @param $currentTeam
+     *
+     * @return Api
+     */
     public static function factory($accessToken, $currentTeam)
     {
         $client = Client::factory($accessToken, $currentTeam);
+
         return new self($client, $currentTeam);
     }
 
