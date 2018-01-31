@@ -5,9 +5,7 @@ namespace Polidog\Esa\Client;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use Polidog\Esa\Exception\ClientException;
-use Psr\Http\Message\RequestInterface;
 
 final class Client implements ClientInterface
 {
@@ -65,21 +63,21 @@ final class Client implements ClientInterface
         }
     }
 
+    /**
+     * @param       $accessToken
+     * @param array $httpOptions
+     *
+     * @return Client
+     */
     public static function factory($accessToken, $httpOptions = [])
     {
         $httpOptions = array_merge(static::$httpOptions, $httpOptions);
-        $httpOptions['handler'] = static::createAuthStack($accessToken);
+        $authorization = new Authorization($accessToken);
+
+        $httpOptions['handler'] = HandlerStack::create();
+        $authorization->push($httpOptions['handler']);
 
         return new self($accessToken, new \GuzzleHttp\Client($httpOptions));
     }
 
-    private static function createAuthStack($accessToken)
-    {
-        $stack = HandlerStack::create();
-        $stack->push(Middleware::mapRequest(function (RequestInterface $request) use ($accessToken) {
-            return $request->withHeader('Authorization', 'Bearer '.$accessToken);
-        }));
-
-        return $stack;
-    }
 }
