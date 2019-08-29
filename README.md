@@ -1,7 +1,6 @@
 # esa-php
 
 [![Build Status](https://travis-ci.org/polidog/esa-php.svg)](https://travis-ci.org/polidog/esa-php)
-[![Coverage Status](https://coveralls.io/repos/github/polidog/esa-php/badge.svg?branch=master)](https://coveralls.io/github/polidog/esa-php?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/polidog/esa-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/polidog/esa-php/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/polidog/esa-php/v/stable)](https://packagist.org/packages/polidog/esa-php)
 [![Total Downloads](https://poser.pugx.org/polidog/esa-php/downloads)](https://packagist.org/packages/polidog/esa-php)

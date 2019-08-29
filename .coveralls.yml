@@ -1,4 +1,0 @@
-# for php-coveralls
-coverage_clover: build/clover.xml
-json_path: build/coveralls-upload.json
-repo_token: 3xJFnsjbW1bOVnKn757tIp3Fum8UC7Cvi
