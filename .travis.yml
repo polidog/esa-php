@@ -1,22 +1,20 @@
 language: php
 
 php:
-  - 5.6
-  - 7.0
-  - 7.1
-before_script:
-  - composer install --prefer-source
+  - '5.6'
+  - '7.0'
+  - '7.1'
+  - '7.2'
+  - '7.3'
 
-before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev --no-interaction
+install:
+  - composer install
 
 script:
   - mkdir -p build/logs
   - mkdir -p build/cov
-  - php vendor/bin/phpunit -c phpunit.xml.dist
+  - php vendor/bin/phpunit -c phpunit.xml.dist --coverage-clover=coverage.clover
 
 after_script:
-  - php vendor/bin/php-coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
