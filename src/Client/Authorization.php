@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Polidog\Esa\Client;
 
-
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 
 class Authorization
@@ -15,29 +16,18 @@ class Authorization
      */
     private $accessToken;
 
-    /**
-     * @param string $accessToken
-     */
-    public function __construct($accessToken)
+    public function __construct(string $accessToken)
     {
         $this->accessToken = $accessToken;
     }
 
-    /**
-     * @param HandlerStack $stack
-     */
-    public function push(HandlerStack $stack)
+    public function push(HandlerStack $stack): void
     {
         $stack->push(Middleware::mapRequest([$this, 'handle']));
     }
 
-    /**
-     * @param RequestInterface $request
-     * @return RequestInterface
-     */
-    public function handle(RequestInterface $request)
+    public function handle(RequestInterface $request): MessageInterface
     {
         return $request->withHeader('Authorization', 'Bearer '.$this->accessToken);
     }
-
 }

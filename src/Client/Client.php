@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Esa\Client;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
@@ -32,27 +34,16 @@ final class Client implements ClientInterface
         ],
     ];
 
-    /**
-     * @param string              $accessToken
-     * @param HttpClientInterface $httpClient
-     */
-    public function __construct($accessToken, HttpClientInterface $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
-        $this->accessToken = $accessToken;
         $this->httpClient = $httpClient;
     }
 
     /**
-     * @param string $method
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array
-     *
      * @throws ClientException
      * @throws \RuntimeException
      */
-    public function request($method, $path, array $data = [])
+    public function request(string $method, string $path, array $data = []): array
     {
         try {
             $response = $this->httpClient->request($method, $path, $data);
@@ -63,13 +54,7 @@ final class Client implements ClientInterface
         }
     }
 
-    /**
-     * @param       $accessToken
-     * @param array $httpOptions
-     *
-     * @return Client
-     */
-    public static function factory($accessToken, $httpOptions = [])
+    public static function factory(string $accessToken, array $httpOptions = []): self
     {
         $httpOptions = array_merge(static::$httpOptions, $httpOptions);
         $authorization = new Authorization($accessToken);
@@ -77,7 +62,6 @@ final class Client implements ClientInterface
         $httpOptions['handler'] = HandlerStack::create();
         $authorization->push($httpOptions['handler']);
 
-        return new self($accessToken, new \GuzzleHttp\Client($httpOptions));
+        return new self(new \GuzzleHttp\Client($httpOptions));
     }
-
 }
