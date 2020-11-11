@@ -1,12 +1,12 @@
 # esa-php
 
-[![Build Status](https://travis-ci.org/polidog/esa-php.svg)](https://travis-ci.org/polidog/esa-php)
+![test](https://github.com/polidog/esa-php/workflows/test/badge.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/polidog/esa-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/polidog/esa-php/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/polidog/esa-php/v/stable)](https://packagist.org/packages/polidog/esa-php)
 [![Total Downloads](https://poser.pugx.org/polidog/esa-php/downloads)](https://packagist.org/packages/polidog/esa-php)
 [![License](https://poser.pugx.org/polidog/esa-php/license)](https://packagist.org/packages/polidog/esa-php)
 
-esa API v2 client library, written in PHP
+esa API v1 client library, written in PHP
 
 ## Installation
 

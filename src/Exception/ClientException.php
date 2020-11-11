@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Esa\Exception;
 
 class ClientException extends \RuntimeException
@@ -44,10 +46,8 @@ class ClientException extends \RuntimeException
     }
 
     /**
-     * @param \Exception $e
-     * @param            $method
-     * @param            $path
-     * @param array      $params
+     * @param $method
+     * @param $path
      *
      * @return ClientException
      */

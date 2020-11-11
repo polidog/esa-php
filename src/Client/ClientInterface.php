@@ -1,15 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Polidog\Esa\Client;
 
 interface ClientInterface
 {
-    /**
-     * @param string $method
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array
-     */
-    public function request($method, $path, array $data = []);
+    public function request(string $method, string $path, array $data = []): array;
 }
