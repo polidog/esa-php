@@ -1,5 +1,6 @@
 # esa-php
 
+![test](https://github.com/polidog/esa-php/workflows/test/badge.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/polidog/esa-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/polidog/esa-php/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/polidog/esa-php/v/stable)](https://packagist.org/packages/polidog/esa-php)
 [![Total Downloads](https://poser.pugx.org/polidog/esa-php/downloads)](https://packagist.org/packages/polidog/esa-php)
