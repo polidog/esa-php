@@ -42,6 +42,19 @@ final class ClientTest extends TestCase
         $client = new Client($httpClient->reveal());
         $client->request('GET', '/test', ['query' => ['a' => 'b']]);
         $httpClient->request('GET', '/test', ['query' => ['a' => 'b']]);
+
+
+        $stream->getContents()
+            ->willReturn(json_encode(['a' => 'b']))
+            ->shouldHaveBeenCalledOnce();
+
+        $response->getBody()
+            ->willReturn($stream->reveal())
+            ->shouldHaveBeenCalledOnce();
+
+        $httpClient->request(Argument::any(), Argument::any(), Argument::any())
+            ->willReturn($response->reveal())
+            ->shouldHaveBeenCalledOnce();
     }
 
     public function testRequestException(): void

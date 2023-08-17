@@ -10,22 +10,10 @@ use Polidog\Esa\Client\ClientInterface;
 /**
  * Class ApiMethods.
  */
-class Api
+final class Api
 {
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var string
-     */
-    private $currentTeam;
-
-    public function __construct(ClientInterface $client, string $currentTeam)
+    public function __construct(private ClientInterface $client, private string $currentTeam)
     {
-        $this->client = $client;
-        $this->currentTeam = $currentTeam;
     }
 
     public function user(array $params = []): array
