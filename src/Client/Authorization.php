@@ -9,16 +9,10 @@ use GuzzleHttp\Middleware;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 
-class Authorization
+final class Authorization
 {
-    /**
-     * @var string
-     */
-    private $accessToken;
-
-    public function __construct(string $accessToken)
+    public function __construct(private string $accessToken)
     {
-        $this->accessToken = $accessToken;
     }
 
     public function push(HandlerStack $stack): void
