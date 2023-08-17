@@ -10,11 +10,14 @@ use PHPUnit\Framework\TestCase;
 use Polidog\Esa\Client\Client;
 use Polidog\Esa\Exception\ClientException;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
-class ClientTest extends TestCase
+final class ClientTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testFactory(): void
     {
         $client = Client::factory('token');
