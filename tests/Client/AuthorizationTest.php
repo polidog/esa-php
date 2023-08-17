@@ -8,11 +8,14 @@ use GuzzleHttp\HandlerStack;
 use PHPUnit\Framework\TestCase;
 use Polidog\Esa\Client\Authorization;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 
-class AuthorizationTest extends TestCase
+final class AuthorizationTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testHandle(): void
     {
         $token = 'xxxxxxxxxxxxxxxxxx';

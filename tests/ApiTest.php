@@ -7,9 +7,12 @@ namespace Polidog\Esa\Test;
 use PHPUnit\Framework\TestCase;
 use Polidog\Esa\Api;
 use Polidog\Esa\Client\ClientInterface;
+use Prophecy\PhpUnit\ProphecyTrait;
 
-class ApiTest extends TestCase
+final class ApiTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var \Prophecy\Prophecy\ObjectProphecy|ClientInterface
      */
